@@ -46,7 +46,7 @@ function select() {
 function items() {
   let a = ''
   for (let i = 0; i < s.length; i++) {
-    a += "<div class='card shadow p-3 mb-5 bg-body rounded' style='width: 16rem; margin:2.5rem;'><div class='card-body'><h5 class='card-title' style='color:black'>" + note[i] + "</h5><p class='card-text' style='color:black'>" + s[i] + "</p><button type='button' id=" + i + " class='btn btn-primary delete'>Delete</button></div></div>";
+    a += "<div class='card shadow p-3 mb-5 bg-body rounded' style='width: 16rem; margin:3rem;'><div class='card-body'><h5 class='card-title' style='color:black'>" + note[i] + "</h5><p class='card-text' style='color:black'>" + s[i] + "</p><button type='button' id=" + i + " class='btn btn-primary delete'>Delete</button></div></div>";
   }
   document.querySelector('.row').innerHTML = a;
 }
@@ -61,11 +61,19 @@ document.addEventListener('click', (e) => {
     localStorage.setItem(1, JSON.stringify(s));
     items();
   } else if (d.innerHTML === 'Add Note') {
-    s.push(t.value);
-    localStorage.setItem(1, JSON.stringify(s));
-    t.value = '';
-    select();
-    items();
+    if(t.value!=''){
+      s.push(t.value);
+      localStorage.setItem(1, JSON.stringify(s));
+      t.value = '';
+      select();
+      items();
+      document.getElementById('alert').innerHTML = '<div class="alert alert-primary" role="alert"><strong>Sucess</strong> Note is added</div>'
+    }else{
+      document.getElementById('alert').innerHTML = '<div class="alert alert-danger" role="alert"><strong>Warning</strong> Please Enter a Valid Note</div>'
+    }
+    setTimeout(function () {
+      document.getElementById('alert').innerHTML = ''
+    }, 3000);
   }
 });
 
